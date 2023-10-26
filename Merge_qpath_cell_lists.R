@@ -37,7 +37,7 @@ repNA <- function(x) {
 ## Eliminate NAs in count columns using repNA function
 all[,63:ncol(all)] <- lapply(all[,63:ncol(all)], function(x) repNA(x))
 
-
+all$manual_or_final <- rowSums(all[,c("manual_filter","final_detections")])
 ##########################################################################################################
 #### Export tables
 ##########################################################################################################
@@ -48,9 +48,15 @@ write.table(all, file="Merged_files.txt", quote = F, row.names = F, sep = "\t")
 ##########################################################################################################
 # library(mlbench)
 # library(caret)
-
-
-
+# 
+# ## Create a correlation matrix to identify highly correlated attributes
+# corMatrix <- cor(all[,6:62])
+# 
+# ## Look at the correlation matrix
+# print(corMatrix)
+# 
+# ## Find correlated attributes, using 0.5 but expecting to remove >0.75
+# highCor <- findCorrelation(corMatrix, cutoff=0.5)
 
 # initial$initial <- 1
 # dapi$dapi_filter <- 1
